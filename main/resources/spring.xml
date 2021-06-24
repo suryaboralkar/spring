@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+<context:component-scan base-package="com.xworkz.xworkzapp"/>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="app.properties">
+		</property>
+	</bean>
+
+	<bean class="com.xworkz.xworkzapp.dao.PizzaDAOImpli" id="pizza">
+		<constructor-arg name="sessionFactory" ref="config"></constructor-arg>
+	</bean>
+
+
+	<bean
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		id="config">
+		<property name="dataSource" ref="datasource"></property>
+		<property name="annotatedClasses">
+		<list>
+		<value>com.xworkz.xworkzapp.dto.PizzaDTO</value>
+		</list>
+		</property>
+	</bean>
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="datasource">
+     <constructor-arg value="${database.url}"></constructor-arg>
+     <constructor-arg value="${database.user}"></constructor-arg>
+     <constructor-arg value="${database.passward}"></constructor-arg>
+<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>     
+     
+	</bean>
+
+
+
+</beans>
